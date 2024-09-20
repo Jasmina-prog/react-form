@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, Modal, Radio } from 'antd';
+import { Button, Form, Input, Modal, InputNumber, Select } from 'antd';
 const ModalCheck = () => {
   const [form] = Form.useForm();
   const [formValues, setFormValues] = useState();
@@ -12,7 +12,7 @@ const ModalCheck = () => {
   return (
     <>
       <Button type="primary" onClick={() => setOpen(true)}>
-        New Collection
+        Click
       </Button>
       <pre>{JSON.stringify(formValues, null, 2)}</pre>
       <Modal
@@ -28,7 +28,7 @@ const ModalCheck = () => {
         destroyOnClose
         modalRender={(dom) => (
           <Form
-            layout="vertical"
+            layout="horizontal"
             form={form}
             name="form_in_modal"
             initialValues={{
@@ -42,25 +42,59 @@ const ModalCheck = () => {
         )}
       >
         <Form.Item
-          name="title"
-          label="Title"
+          name="FirstName"
+          label="FirstName"
           rules={[
             {
               required: true,
-              message: 'Please input the title of collection!',
+              message: 'Please input your first name!',
             },
           ]}
         >
           <Input />
         </Form.Item>
-        <Form.Item name="description" label="Description">
-          <Input type="textarea" />
+        <Form.Item name="lastName" label="LastName">
+          <Input />
         </Form.Item>
-        <Form.Item name="modifier" className="collection-create-form_last-form-item">
-          <Radio.Group>
-            <Radio value="public">Public</Radio>
-            <Radio value="private">Private</Radio>
-          </Radio.Group>
+
+        <Form.Item
+          label="Address">
+          <Select
+            showSearch
+            placeholder="Select a region"
+            filterOption={(input, option) =>
+              (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+            }
+            options={[
+              {
+                value: '1',
+                label: 'Toshkent',
+              },
+              {
+                value: '2',
+                label: 'Surxandaryo',
+              },
+              {
+                value: '3',
+                label: 'Qashqadaryo',
+              },
+              {
+                value: '4',
+                label: 'Andijon',
+              },
+              {
+                value: '5',
+                label: 'Buxoro',
+              }
+
+            ]}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Phone Number"
+          name="Phone Number">
+          <InputNumber />
         </Form.Item>
       </Modal>
     </>

@@ -6,8 +6,8 @@ function App() {
 
   return (
     <>
-    <ModalComp/>
-    {/* <ModalCheck/> */}
+    {/* <ModalComp/> */}
+    <ModalCheck/>
     </>
   )
 }
