@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { Modal, Form, Select, Input, InputNumber } from "antd";
+import { useForm, Controller } from "react-hook-form";
+import { Modal, Form, Select, Input, InputNumber, Button } from "antd";
 import Btn from "./Button";
 
 
 function ModalComp() {
 
   const form = useForm()
-  const { register, handleSubmit } = form
+  const { register, handleSubmit, control ,formState } = form
+  const { errors } = formState;
 
   const submitFn = (data) => {
     console.log(data);
@@ -24,12 +25,29 @@ function ModalComp() {
     setIsModalOpen(false);
   };
 
+  console.log(Controller);
+  
   return (
     <>
       <Btn modal={showModal} />
       <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <Form name="basic" onSubmitCapture={handleSubmit(submitFn)}>
-          <Form.Item
+        <Form name="basic" onSubmit={handleSubmit(submitFn)} >
+        <Controller 
+            name="name"
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field}) => (
+              <>
+              <Input {...field} placeholder="Enter your name" />
+              <Button {...field} htmlType="submit">Submit</Button>
+              </>
+          )}
+            />
+            
+
+          {/* <Form.Item
             label="FirstName"
             name="FirstName"
             rules={[
@@ -41,6 +59,7 @@ function ModalComp() {
           >
             <Input {...register('name')}/>
           </Form.Item>
+          <p style={{color:'red'}}>{errors?.username?.message}</p>
           <Form.Item
             label="LastName"
             name="LastName"
@@ -53,8 +72,6 @@ function ModalComp() {
           >
             <Input {...register('lastname')}/>
           </Form.Item>
-
-
           <Form.Item
             label="Address">
             <Select
@@ -92,8 +109,9 @@ function ModalComp() {
             label="Phone Number"
             name="Phone Number">
             <InputNumber/>
-          </Form.Item>
+          </Form.Item> */}
 
+              
         </Form>
       </Modal>
     </>
